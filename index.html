@@ -122,13 +122,7 @@
           <h3>Jazykové kurzy</h3>
           <p class="muted">Angličtina, němčina, francouzština · cena za 1 vyučovací hodinu</p>
           <table>
-            <tbody>
-              <tr><td>individuální výuka</td><td>479 Kč</td></tr>
-              <tr><td>skupina 2 osoby</td><td>519 Kč</td></tr>
-              <tr><td>skupina 3 osoby</td><td>559 Kč</td></tr>
-              <tr><td>skupina 4 osoby</td><td>599 Kč</td></tr>
-              <tr><td>skupina 5 a více osob</td><td>649 Kč</td></tr>
-            </tbody>
+            <tbody id="cenik-kurzy"></tbody>
           </table>
           <p class="note">Standardní blok trvá 90 minut (2 vyučovací hodiny), zkrácený 60 minut. Ceny platí pro výuku u nás. Firemní kurzy u zákazníka podle dohody, k ceně se připočítává doprava. Výuka je možná i online. <a href="#podminky">Podmínky kurzů</a></p>
         </div>
@@ -138,13 +132,7 @@
           <p class="muted">Základní sazba za 1 normostranu (1&nbsp;800 znaků)</p>
           <table>
             <thead><tr><th>Jazyk</th><th>do češtiny</th><th>z češtiny</th></tr></thead>
-            <tbody>
-              <tr><td>angličtina</td><td>339 Kč</td><td>389 Kč</td></tr>
-              <tr><td>němčina</td><td>339 Kč</td><td>389 Kč</td></tr>
-              <tr><td>francouzština</td><td>399 Kč</td><td>449 Kč</td></tr>
-              <tr><td>ruština</td><td>339 Kč</td><td>389 Kč</td></tr>
-              <tr><td>polština</td><td>339 Kč</td><td>389 Kč</td></tr>
-            </tbody>
+            <tbody id="cenik-preklady"></tbody>
           </table>
           <p class="note">Příplatky: odborný text +10–50&nbsp;%, expresní překlad (více než 8&nbsp;normostran za 1&nbsp;pracovní den).</p>
         </div>
@@ -153,11 +141,7 @@
           <h3>Tlumočení</h3>
           <p class="muted">Cena za tlumočníka</p>
           <table>
-            <tbody>
-              <tr><td>do 2 hodin</td><td>2 990 Kč</td></tr>
-              <tr><td>každá další započatá půlhodina (do 8 hodin denně)</td><td>679 Kč</td></tr>
-              <tr><td>každá další půlhodina nad 8 hodin denně</td><td>999 Kč</td></tr>
-            </tbody>
+            <tbody id="cenik-tlumoceni"></tbody>
           </table>
         </div>
 
@@ -237,7 +221,31 @@
   </div>
 </footer>
 
+<script src="ceny.js"></script>
 <script>
+  // Vykreslení ceníku ze souboru ceny.js
+  (function () {
+    function kc(n) { return Number(n).toLocaleString("cs-CZ") + " Kč"; }
+    function td(text) { var c = document.createElement("td"); c.textContent = text; return c; }
+    function fill(id, rows, cells) {
+      var body = document.getElementById(id);
+      rows.forEach(function (r) {
+        var tr = document.createElement("tr");
+        cells(r).forEach(function (t) { tr.appendChild(td(t)); });
+        body.appendChild(tr);
+      });
+    }
+    if (typeof CENIK === "undefined") {
+      ["cenik-kurzy", "cenik-preklady", "cenik-tlumoceni"].forEach(function (id) {
+        document.getElementById(id).innerHTML = '<tr><td colspan="3">Ceník je dočasně nedostupný, zavolejte nám prosím.</td></tr>';
+      });
+      return;
+    }
+    fill("cenik-kurzy", CENIK.kurzy, function (r) { return [r.nazev, kc(r.cena)]; });
+    fill("cenik-preklady", CENIK.preklady, function (r) { return [r.jazyk, kc(r.doCestiny), kc(r.zCestiny)]; });
+    fill("cenik-tlumoceni", CENIK.tlumoceni, function (r) { return [r.nazev, kc(r.cena)]; });
+  })();
+
   // Odkaz na #podminky rozbalí podmínky kurzů
   function openTerms() { if (location.hash === "#podminky") document.getElementById("podminky").open = true; }
   window.addEventListener("hashchange", openTerms);
