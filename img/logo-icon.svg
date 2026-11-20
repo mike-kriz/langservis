@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="LangServis">
-  <path fill="#1E2A4A" d="M10 4H24A8 8 0 0 1 32 12V18A8 8 0 0 1 24 26H13L7 31V25.2A8 8 0 0 1 2 18V12A8 8 0 0 1 10 4Z"/>
-  <path fill="#F2674A" stroke="#FFFFFF" stroke-width="3" paint-order="stroke" stroke-linejoin="round" d="M24 18H38A8 8 0 0 1 46 26V32A8 8 0 0 1 41 39.2V45L35 40H24A8 8 0 0 1 16 32V26A8 8 0 0 1 24 18Z"/>
+  <defs>
+    <mask id="ls-gap" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="#fff"/>
+      <path fill="#000" stroke="#000" stroke-width="3" stroke-linejoin="round" d="M24 18H38A8 8 0 0 1 46 26V32A8 8 0 0 1 41 39.2V45L35 40H24A8 8 0 0 1 16 32V26A8 8 0 0 1 24 18Z"/>
+    </mask>
+  </defs>
+  <path fill="#1E2A4A" mask="url(#ls-gap)" d="M10 4H24A8 8 0 0 1 32 12V18A8 8 0 0 1 24 26H13L7 31V25.2A8 8 0 0 1 2 18V12A8 8 0 0 1 10 4Z"/>
+  <path fill="#F2674A" d="M24 18H38A8 8 0 0 1 46 26V32A8 8 0 0 1 41 39.2V45L35 40H24A8 8 0 0 1 16 32V26A8 8 0 0 1 24 18Z"/>
 </svg>
